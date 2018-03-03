@@ -1,0 +1,244 @@
+[
+    {
+        "name": "root",
+        "layout": {
+            "isVertical": true,
+            "isStill": true,
+            "scrollspeed": 2,
+            "xoff": 20,
+            "yoff": 60,
+            "basecolor": "0xFF777777",
+            "selcolor": "0xFF28AA05"
+        },
+        "timeout": 99999,
+        "background": {
+            "src": "mods/jsonmenu/menus/root/bg.raw"
+        },
+        "music": 5,
+        "options": [
+            {
+                "id": "gp",
+                "text": "Grand Prix",
+                "target": "charselect",
+                "actions": [
+                    {"setvar": "0x85DF28", "value": "5"}
+                ]
+            },
+            {
+                "id": "tt",
+                "text": "Time Trial",
+                "target": "ttmode",
+                "actions": [
+                    {"setvar": "0x85DF28", "value": "1"}
+                ]
+            },
+            {
+                "id": "mp",
+                "text": "Multiplayer",
+                "target": "mpcontrollers"
+            },
+            {
+                "id": "opt",
+                "text": "Options",
+                "actions": [
+                    {"functcall": "0x4335D0"}
+                ]
+            }
+        ]
+    },
+    {
+        "name": "charselect",
+        "layout": {
+            "isVertical": true,
+            "isStill": true,
+            "xoff": 20,
+            "yoff": 60,
+            "scrollspeed": 2
+        },
+        "timeout": 99999,
+        "music": 5,
+        "background": {
+            "src": "mods/jsonmenu/menus/root/bg.raw"
+        },
+        "options": [
+            {
+                "id": "sonic",
+                "text": "Sonic",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "0"}
+                ]
+            },
+            {
+                "id": "tails",
+                "text": "Tails",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "1"}
+                ]
+            },
+            {
+                "id": "knux",
+                "text": "Knuckles",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "2"}
+                ]
+            },
+            {
+                "id": "amy",
+                "text": "Amy",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "3"}
+                ]
+            },
+			{
+                "id": "robotnik",
+                "text": "Dr. Robotnik",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "4"}
+                ]
+            },
+            {
+                "id": "msonic",
+                "text": "Metal Sonic",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "5"}
+                ]
+            },
+            {
+                "id": "dtails",
+                "text": "Tails Doll",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "6"}
+                ]
+            },
+            {
+                "id": "mknux",
+                "text": "Metal Knuckles",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "7"}
+                ]
+            },
+			{
+                "id": "eggrobo",
+                "text": "EggRobo",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "8"}
+                ]
+            },
+            {
+                "id": "ssonic",
+                "text": "Super Sonic",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "9"}
+                ]
+            },
+            {
+                "text": "Crashy Mc. Invalid",
+                "target": "courseselect",
+                "actions": [
+                    {"setvar": "0x7B747A", "value": "10"}
+                ]
+            }
+        ]
+    },
+    {
+        "name": "courseselect",
+        "layout": {
+            "isVertical": true,
+            "isStill": true,
+            "xoff": 20,
+            "yoff": 60,
+            "scrollspeed": 2
+        },
+        "timeout": 99999,
+        "music": 5,
+        "background": {
+            "src": "mods/jsonmenu/menus/root/bg.raw"
+        },
+        "options": [
+            {
+                "id": "island",
+                "text": "Resort Island",
+                "actions": [
+                    {"setvar": "0x7af13c", "value": "1"},
+                    {"startgame": true}
+                ]
+            },
+            {
+                "id": "city",
+                "text": "Radical City",
+                "actions": [
+                    {"setvar": "0x7af13c", "value": "2"},
+                    {"startgame": true}
+                ]
+            },
+			{
+                "id": "factory",
+                "text": "Reactive Factory",
+                "actions": [
+                    {"setvar": "0x7af13c", "value": "3"},
+                    {"startgame": true}
+                ]
+            },
+            {
+                "id": "ruin",
+                "text": "Regal Ruin",
+                "actions": [
+                    {"setvar": "0x7af13c", "value": "4"},
+                    {"startgame": true}
+                ]
+            },
+            {
+                "id": "emerald",
+                "text": "Radiant Emerald",
+                "actions": [
+                    {"setvar": "0x7af13c", "value": "5"},
+                    {"startgame": true}
+                ]
+            }
+        ]
+    },
+	{
+        "name": "ttmode",
+        "layout": {
+            "isVertical": true,
+            "isStill": true,
+            "xoff": 20,
+            "yoff": 60,
+            "scrollspeed": 2
+        },
+        "timeout": 99999,
+        "music": 5,
+        "background": {
+            "src": "mods/jsonmenu/menus/root/bg.raw"
+        },
+        "options": [
+            {
+                "id": "normal",
+                "text": "Normal",
+                "target": "charselect"
+            },
+            {
+                "text": "Reverse",
+				"target": "charselect"
+            },
+            {
+                "text": "Get 5 Balloons",
+                "target": "charselect"
+            },
+            {
+                "text": "Tag 4 Characters",
+                "target": "charselect"
+            }
+        ]
+    }
+]
