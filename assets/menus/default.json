@@ -2,13 +2,13 @@
     {
         "name": "root",
         "layout": {
-            "isVertical": true,
-            "isStill": true,
-            "scrollspeed": 2,
-            "xoff": 20,
-            "yoff": 60,
-            "basecolor": "0xFF777777",
-            "selcolor": "0xFF28AA05"
+            "class": "scroll_vertical",
+            "properties": {
+                "xoff": 20,
+                "yoff": 100,
+                "basecolor": "0xFF666666",
+                "selcolor": "0xFFFF6666"
+            }
         },
         "timeout": 99999,
         "background": {
@@ -49,11 +49,13 @@
     {
         "name": "charselect",
         "layout": {
-            "isVertical": true,
-            "isStill": true,
-            "xoff": 20,
-            "yoff": 60,
-            "scrollspeed": 2
+            "class": "simple_vertical",
+            "properties": {
+                "xoff": 20,
+                "yoff": 60,
+                "basecolor": "0xFF666666",
+                "selcolor": "0xFFFF6666"
+            }
         },
         "timeout": 99999,
         "music": 5,
@@ -153,11 +155,13 @@
     {
         "name": "courseselect",
         "layout": {
-            "isVertical": true,
-            "isStill": true,
-            "xoff": 20,
-            "yoff": 60,
-            "scrollspeed": 2
+            "class": "simple_vertical",
+            "properties": {
+                "xoff": 20,
+                "yoff": 60,
+                "basecolor": "0xFF666666",
+                "selcolor": "0xFFFF6666"
+            }
         },
         "timeout": 99999,
         "music": 5,
@@ -210,11 +214,13 @@
 	{
         "name": "ttmode",
         "layout": {
-            "isVertical": true,
-            "isStill": true,
-            "xoff": 20,
-            "yoff": 60,
-            "scrollspeed": 2
+            "class": "simple_vertical",
+            "properties": {
+                "xoff": 20,
+                "yoff": 60,
+                "basecolor": "0xFF666666",
+                "selcolor": "0xFFFF6666"
+            }
         },
         "timeout": 99999,
         "music": 5,
