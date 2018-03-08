@@ -153,12 +153,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MiscFuncts.h" />
+    <ClInclude Include="SonicRFuncts.h" />
+    <ClInclude Include="MenuClasses\scrollhorizontal.h" />
+    <ClInclude Include="MenuClasses\scrollvertical.h" />
+    <ClInclude Include="MenuClasses\simplevertical.h" />
+    <ClInclude Include="MenuElements.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="JSONMenu.cpp" />
+    <ClCompile Include="MiscFuncts.cpp" />
+    <ClCompile Include="SonicRFuncts.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
