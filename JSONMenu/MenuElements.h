@@ -66,7 +66,7 @@ public:
 		int yLow = std::numeric_limits<int>::max();
 		int yHigh = std::numeric_limits<int>::min();
 
-		for (int i = 0; i < elems.size(); i++) {
+		for (size_t i = 0; i < elems.size(); i++) {
 			if (elems[i]->x < xLow) { xLow = elems[i]->x; }
 			if ((elems[i]->w + elems[i]->x ) > xHigh) { xHigh = (elems[i]->w + elems[i]->x); }
 			if (elems[i]->y < yLow) { yLow = elems[i]->y; }
@@ -149,7 +149,7 @@ public:
 	}
 
 	void draw(unsigned int state) {
-		for (unsigned int i = 0; i < getElemSize(); i++) {
+		for (int i = 0; i < getElemSize(); i++) {
 			getElem(i)->draw(state);
 		}
 	}

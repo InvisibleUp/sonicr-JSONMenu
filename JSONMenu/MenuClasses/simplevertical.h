@@ -105,7 +105,7 @@ public:
 
 	void draw(unsigned int state) {
 		// Options
-		for (unsigned int i = selectionIndexStart; i <= selectionIndexEnd; i++) {
+		for (int i = selectionIndexStart; i <= selectionIndexEnd; i++) {
 			if (states[i] != DISABLED) { states[i] = (selection == i); }
 			getElem(i)->draw(states[i]);
 		}
@@ -130,3 +130,9 @@ public:
 	void hscroll(int amount) { return; }
 	bool doAction(rapidjson::Value &action) { return false; }
 };
+
+void * MenuSelectorSimpleVertical_Constructor(
+	rapidjson::Value &a, std::vector<const char *> GFXList
+) {
+	return new MenuSelectorSimpleVertical(a, GFXList);
+}

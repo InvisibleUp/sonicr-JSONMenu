@@ -11,7 +11,7 @@ private:
 	int spacing;
 	enum States { NORMAL = 0, HIGHLIGHTED = 1, DISABLED = 2 };
 public:
-	MenuSelectorScrollHorizontal(rapidjson::Value &a) {
+	MenuSelectorScrollHorizontal(rapidjson::Value &a, std::vector<const char *> GFXList) {
 		// Fetch layout properties
 		std::vector<unsigned int> colors;
 		if (a.HasMember("layout") && a["layout"].HasMember("properties")) {
@@ -59,7 +59,7 @@ public:
 			x = x_tgt;
 		}
 
-		for (unsigned int i = 0; i < getElemSize(); i++) {
+		for (int i = 0; i < getElemSize(); i++) {
 			getElem(i)->moveTo(x, y);
 			if (states[i] != DISABLED) { states[i] = (selection == i); }
 			getElem(i)->draw(states[i]);
@@ -87,3 +87,9 @@ public:
 	}
 	bool doAction(rapidjson::Value &action) { return false; }
 };
+
+void * MenuSelectorScrollHorizontal_Constructor(
+	rapidjson::Value &a, std::vector<const char *> GFXList
+) {
+	return new MenuSelectorScrollHorizontal(a, GFXList);
+}

@@ -120,7 +120,7 @@ public:
 		}
 
 		// Options
-		for (unsigned int i = selectionIndexStart; i <= selectionIndexEnd; i++) {
+		for (int i = selectionIndexStart; i <= selectionIndexEnd; i++) {
 			getElem(i)->moveTo(x, y);
 			if (states[i] != DISABLED) { states[i] = (selection == i); }
 			getElem(i)->draw(states[i]);
@@ -149,3 +149,9 @@ public:
 	void hscroll(int amount) { return; }
 	bool doAction(rapidjson::Value &action) { return false; }
 };
+
+void * MenuSelectorScrollVertical_Constructor(
+	rapidjson::Value &a, std::vector<const char *> GFXList
+) {
+	return new MenuSelectorScrollVertical(a, GFXList);
+}
