@@ -29,6 +29,15 @@ FunctionPointer(void, Pad_GetInputs, (void), 0x421330);
 FunctionPointer(void, Music_Play, (int trackID), 0x43C210);
 FunctionPointer(void, QuitSonicR, (void), 0x439270);
 
+// Memory addresses
+DataPointer(int, P1_Identity, 0x7B747A);
+DataPointer(int, Char_ModelCount, 0x753504);
+DataPointer(int, Player_Count, 0x85DF28);
+DataPointer(int, Track_ID, 0x7af13c);
+DataArray(int, Char_Unlocked, 0x752BE0, 10);
+DataPointer(int, Oval_Speed, 0x5F388c);
+DataPointer(int, Oval_Size, 0x7BCB28);
+
 // Helper functions
 struct Inputs {
 	bool Up;
@@ -43,3 +52,5 @@ struct Inputs {
 	bool R;
 };
 struct Inputs Pad_GetInputsUsable(int player);
+
+void RandomizeGPPlayers();

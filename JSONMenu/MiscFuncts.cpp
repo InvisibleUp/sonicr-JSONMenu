@@ -2,15 +2,17 @@
 
 rapidjson::Document dump_json(const char *filepath) {
 	FILE* fp;
-	char buf[65536];
+	char *buf = (char *)malloc(65536);
 
 	fopen_s(&fp, filepath, "rb");
+	if (fp == 0) { return rapidjson::Document(); }
 	rapidjson::FileReadStream is(fp, buf, sizeof(buf));
 
 	rapidjson::Document d;
 	d.ParseStream(is);
 	fclose(fp);
 
+	free(buf);
 	return d;
 }
 

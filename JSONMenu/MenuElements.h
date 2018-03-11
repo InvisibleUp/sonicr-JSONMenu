@@ -61,17 +61,19 @@ public:
 		elems.push_back(elem);
 
 		// Recalculate width and height
-		int xLow = std::numeric_limits<int>::min();
-		int xHigh = std::numeric_limits<int>::max();
-		int yLow = std::numeric_limits<int>::min();
-		int yHigh = std::numeric_limits<int>::max();
+		int xLow = std::numeric_limits<int>::max();
+		int xHigh = std::numeric_limits<int>::min();
+		int yLow = std::numeric_limits<int>::max();
+		int yHigh = std::numeric_limits<int>::min();
 
 		for (int i = 0; i < elems.size(); i++) {
-			if (elems[i]->x > xLow) { xLow = elems[i]->x; }
-			if ((elems[i]->x + elems[i]->w) < xHigh) { xHigh = (elems[i]->x + elems[i]->w); }
-			if (elems[i]->x > yLow) { yLow = elems[i]->y; }
-			if ((elems[i]->y + elems[i]->h) < yHigh) { xHigh = (elems[i]->y + elems[i]->h); }
+			if (elems[i]->x < xLow) { xLow = elems[i]->x; }
+			if ((elems[i]->w + elems[i]->x ) > xHigh) { xHigh = (elems[i]->w + elems[i]->x); }
+			if (elems[i]->y < yLow) { yLow = elems[i]->y; }
+			if ((elems[i]->h + elems[i]->y) > yHigh) { yHigh = (elems[i]->h + elems[i]->y); }
 		}
+
+		//PrintDebug("%d:%d, %d:%d\n", xLow, xHigh, yLow, yHigh);
 
 		w = xHigh - xLow;
 		h = yHigh - yLow;
@@ -85,9 +87,25 @@ public:
 		return elems[i];
 	}
 
+	std::vector<unsigned int> getStates() {
+		return states;
+	}
+
+	void setStates(std::vector<unsigned int> in) {
+		states = in;
+	}
+
+	void addState(unsigned int in) {
+		states.push_back(in);
+	}
+
 	void draw(unsigned int state) {
 		for (unsigned int i = 0; i < elems.size(); i++) {
-			elems[i]->draw(states[i]);
+			if (state == -1) {
+				elems[i]->draw(states[i]);
+			} else {
+				elems[i]->draw(state);
+			}
 		}
 	}
 
@@ -109,7 +127,8 @@ public:
 		int _x, int _y,
 		std::vector<unsigned int> _colors
 	) {
-		int x = _x;
+		x = _x;
+		y = _y;
 
 		// TODO: Replace with call to a Font class
 		for (unsigned int i = 0; i < strlen(text); i++) {
@@ -117,12 +136,12 @@ public:
 			int _tx = ((text[i] - 1) & 0x0F) << 4;
 
 			Menu2DElement *elem = new Menu2DElement(
-				x, _y, 500.0, 16, 16, 7, _tx, _ty, 16, 16, _colors
+				_x, _y, 500.0, 16, 16, 7, _tx, _ty, 16, 16, _colors
 			);
 
 			addElem(elem);
 			states.push_back(0);
-			x += 14;
+			_x += 14;
 		}
 
 		//h = 14;
@@ -141,5 +160,11 @@ class MenuSelector : public MenuLayer {
 public:
 	int selection = 0;
 	int speed = 0;
-	virtual void scroll(int amount) = 0;
+	virtual void vscroll(int amount) = 0;
+	virtual void hscroll(int amount) = 0;
+	virtual bool doAction(rapidjson::Value &action) = 0;
 };
+
+bool Menu_OptEnabled(rapidjson::Value &option);
+int Menu_GetIndexFromID(const char *id, rapidjson::Document &menus);
+std::vector<const char *> Menu_LoadGFX(rapidjson::Value &menu);

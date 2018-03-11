@@ -19,3 +19,23 @@ struct Inputs Pad_GetInputsUsable(int player) {
 
 	return retval;
 }
+
+void RandomizeGPPlayers() {
+	std::vector<bool> taken = std::vector<bool>(Char_ModelCount, false);
+	taken[P1_Identity] = true;
+
+	for (int i = 1; i < Player_Count; i++) {
+		short newChar;
+		do {
+			newChar = rand() % Char_ModelCount;
+		} while (
+			taken[newChar] == true ||
+			Char_Unlocked[newChar] == 0
+		);
+		taken[newChar] = true;
+		PrintDebug("Player %d is %d\n", i, newChar);
+
+		// Set player identity to newChar
+		*(short *)(0x7B747A + i * 0x71C) = newChar;
+	}
+}
