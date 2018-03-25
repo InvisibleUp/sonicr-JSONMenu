@@ -1,9 +1,9 @@
 #pragma once
 #include "stdafx.h"
-#include "../MenuElements.h"
+#include "MenuElements.h"
 
-// A menu selection layer that scrolls vertically
-class MenuSelectorSimpleVertical : public MenuSelector {
+// A menu selection layer that lists elements vertically
+class SonicRushTitle : public MenuSelector {
 private:
 	int selectionIndexStart;
 	int selectionIndexEnd;
@@ -11,8 +11,10 @@ private:
 	int xspacing;
 	int yspacing;
 	enum States {NORMAL = 0, HIGHLIGHTED = 1, DISABLED = 2, BRIGHT = 3};
+	std::vector<unsigned int> choiceSizes;
+	std::vector<unsigned int> choiceSelections;
 public:
-	MenuSelectorSimpleVertical(rapidjson::Value &a, std::vector<const char *> GFXList) {
+	SonicRushTitle(rapidjson::Value &a, std::vector<const char *> GFXList) {
 		// Fetch layout properties
 		std::vector<unsigned int> colors;
 
@@ -39,54 +41,82 @@ public:
 		int _y = y;
 		selectionIndexStart = getElemSize();
 
-		for (rapidjson::SizeType i = 0; i < a["options"].Size(); i++) {
-			MenuLayer *layer = new MenuLayer();
-			int _x = x;
-			int ycenter = 0;
+		if (a.HasMember("options")) {
+			for (rapidjson::SizeType i = 0; i < a["options"].Size(); i++) {
+				MenuLayer *layer = new MenuLayer();
+				int _x = x;
+				int ycenter = 0;
+				int choiceCount = 1;
 
-			if (a["options"][i].HasMember("icon")) {
-				const char *filepath = a["options"][i]["icon"]["filepath"].GetString();
-				int tx = JSON_GetNum(a["options"][i]["icon"], "x", 0);
-				int ty = JSON_GetNum(a["options"][i]["icon"], "y", 0);
-				int tw = JSON_GetNum(a["options"][i]["icon"], "w", 16);
-				int th = JSON_GetNum(a["options"][i]["icon"], "h", 16);
-				int scale = JSON_GetNum(a["options"][i]["icon"], "scale", 1);
-				std::vector<unsigned int> dummycolors = std::vector<unsigned int>(4, 0xFFFFFFFF);
+				if (a["options"][i].HasMember("icon")) {
+					MenuElement *icon = Menu_CreateIcon(a["options"][i]["icon"], _x, _y, GFXList);
+					layer->addElem(icon);
+					layer->addState(BRIGHT);
+					_x += icon->w + xspacing;
+					ycenter = icon->h / 2;
+				}
 
-				std::vector<const char *>::iterator iter = std::find_if(
-					GFXList.begin(), GFXList.end(),
-					[filepath](const char *a) {return (strcmp(a, filepath) == 0); }
-				);
-				int tpage = std::distance(GFXList.begin(), iter);
+				if (a["options"][i].HasMember("text")) {
+					if (ycenter >= 8) { ycenter -= 8; } // 1/2 font height
 
-				Menu2DElement *icon = new Menu2DElement(
-					_x, _y, 500.0, tw*scale, th*scale, tpage, tx, ty, tw, th, dummycolors
-				);
-				_x += tw*scale + xspacing;
-				layer->addElem(icon);
-				layer->addState(BRIGHT);
+					MenuText *text = new MenuText(
+						a["options"][i]["text"].GetString(), _x, _y + ycenter, colors
+					);
+					layer->addElem(text);
+					layer->addState(BRIGHT);
+					_x += text->w + xspacing;
+				}
 
-				ycenter = icon->h / 2;
+				if (Menu_OptEnabled(a["options"][i])) {
+					states.push_back(NORMAL);
+				} else {
+					states.push_back(DISABLED);
+				}
+				addElem(layer);
+
+				// Add in choices
+				if (a["options"][i].HasMember("choices")) {
+					for (unsigned int j = 0; j < a["options"][i]["choices"].Size(); j++) {
+						MenuLayer *layer = new MenuLayer();
+						int x_bak = _x;
+
+						if (a["options"][i]["choices"][j].HasMember("icon")) {
+							MenuElement *icon = Menu_CreateIcon(a["options"][i]["choices"][j], _x, _y, GFXList);
+							layer->addElem(icon);
+							layer->addState(BRIGHT);
+							_x += icon->w + xspacing;
+							//ycenter = icon->h / 2;
+						}
+
+						if (a["options"][i]["choices"][j].HasMember("text")) {
+							//if (ycenter >= 8) { ycenter -= 8; } // 1/2 font height
+
+							MenuText *text = new MenuText(
+								a["options"][i]["choices"][j]["text"].GetString(), _x, _y + ycenter, colors
+							);
+							layer->addElem(text);
+							layer->addState(BRIGHT);
+						}
+						_x = x_bak;
+						choiceCount += 1;
+
+						if(Menu_OptEnabled(a["options"][i]["choices"][j])) {
+							states.push_back(NORMAL);
+						} else {
+							states.push_back(DISABLED);
+						}
+						addElem(layer);
+					}
+				}
+
+				choiceSizes.push_back(choiceCount);
+				if (choiceCount == 1) {
+					choiceSelections.push_back(0);
+				} else {
+					choiceSelections.push_back(1);
+				}
+				_y += layer->h + yspacing;
 			}
-
-			if (a["options"][i].HasMember("text")) {
-				if (ycenter >= 8) { ycenter -= 8; } // 1/2 font height
-
-				MenuText *text = new MenuText(
-					a["options"][i]["text"].GetString(), _x, _y + ycenter, colors
-				);
-				layer->addElem(text);
-				layer->addState(BRIGHT);
-			}
-
-			if (Menu_OptEnabled(a["options"][i])) {
-				states.push_back(NORMAL);
-			} else {
-				states.push_back(DISABLED);
-			}
-
-			addElem(layer);
-			_y += layer->h + yspacing;
 		}
 		selectionIndexEnd = getElemSize() - 1;
 
@@ -105,34 +135,87 @@ public:
 
 	void draw(unsigned int state) {
 		// Options
-		for (int i = selectionIndexStart; i <= selectionIndexEnd; i++) {
-			if (states[i] != DISABLED) { states[i] = (selection == i); }
-			getElem(i)->draw(states[i]);
+		int i = 0, pos = 0;
+		while(pos <= selectionIndexEnd) {
+			if (states[pos] != DISABLED) { states[pos] = (selection == i); }
+			getElem(pos)->draw(states[pos]);
+
+			int optPos = pos + choiceSelections[i];
+			if (choiceSelections[i] != 0) {
+				getElem(optPos)->draw(states[optPos]);
+			}
+
+			pos += choiceSizes[i];
+			i += 1;
 		}
 
 		// Title
 		if (titleIndex != -1) { getElem(titleIndex)->draw(HIGHLIGHTED); }
 	}
 
-	void vscroll(int amount) {
-		int oldSelection = selection;
+	void vscroll(int dir) {
 		do {
-			selection += amount;
-			if (selection < selectionIndexStart) { 
-				selection = oldSelection; 
-				break; 
-			} else if (selection > selectionIndexEnd) {
-				selection = oldSelection;
-				break; 
+			if (dir < 0) {
+				if (selection <= 0) {
+					break;
+				}
+				selection -= 1;
+			} else if (dir > 0) {
+				if (selection >= choiceSizes.size() - 1) {
+					break;
+				}
+				selection += 1;
 			}
 		} while (states[selection] == DISABLED);
 	}
-	void hscroll(int amount) { return; }
+	void hscroll(int dir) {
+		if (choiceSelections[selection] == 0) { return; }
+
+		if (dir < 0) {
+			if (choiceSelections[selection] <= 1) {
+				return;
+			}
+			choiceSelections[selection] -= 1;
+		} else if (dir > 0) {
+			if (choiceSelections[selection] >= choiceSizes[selection] - 1) {
+				return;
+			}
+			choiceSelections[selection] += 1;
+		}
+	}
+
 	bool doAction(rapidjson::Value &action) { return false; }
+
+	int querySelection() { 
+		int pos = 0;
+		for (int i = 0; i < selection; i++) {
+			pos += choiceSizes[i];
+		}
+
+		if (states[pos] == DISABLED) {
+			return -1;
+		} else {
+			return selection;
+		}
+	}
+	int querySubSelection() { 
+		int pos = 0;
+		for (int i = 0; i < selection; i++) {
+			pos += choiceSizes[i];
+		}
+		int optPos = pos + choiceSelections[selection];
+
+		if (states[optPos] == DISABLED) {
+			return -1;
+		} else {
+			return choiceSelections[selection] - 1;
+		}
+	}
+	void loadTextures(std::vector<const char *> &GFXList) {}
 };
 
 void * MenuSelectorSimpleVertical_Constructor(
 	rapidjson::Value &a, std::vector<const char *> GFXList
 ) {
-	return new MenuSelectorSimpleVertical(a, GFXList);
+	return new SonicRushTitle(a, GFXList);
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 // element interface
 class MenuElement {
 public:
@@ -155,6 +154,33 @@ public:
 	}
 };
 
+class MenuChoices : public MenuLayer {
+	unsigned int selection = 0;
+
+	MenuChoices(
+		MenuElement * category,
+		std::vector <MenuElement *> choices,
+		int _x, int _y
+	) {
+		// Create category label
+		category->moveTo(_x, _y);
+		addElem(category);
+		states.push_back(0);
+
+		// Move and insert choice labels
+		for (int i = 0; i < choices.size(); i++) {
+			choices[i]->moveTo(_x, _y);
+			addElem(choices[i]);
+			states.push_back(0);
+		}
+	}
+
+	void draw(unsigned int state) {
+		getElem(0)->draw(state);
+		getElem(selection + 1)->draw(state);
+	}
+};
+
 // A generic menu selection layer
 class MenuSelector : public MenuLayer {
 public:
@@ -163,8 +189,12 @@ public:
 	virtual void vscroll(int amount) = 0;
 	virtual void hscroll(int amount) = 0;
 	virtual bool doAction(rapidjson::Value &action) = 0;
+	virtual int querySelection() = 0;
+	virtual int querySubSelection() = 0;
+	virtual void loadTextures(std::vector<const char *> &GFXList) = 0;
 };
 
 bool Menu_OptEnabled(rapidjson::Value &option);
 int Menu_GetIndexFromID(const char *id, rapidjson::Document &menus);
 std::vector<const char *> Menu_LoadGFX(rapidjson::Value &menu);
+Menu2DElement * Menu_CreateIcon(rapidjson::Value &iconJSON, int _x, int _y, std::vector<const char *> GFXList);

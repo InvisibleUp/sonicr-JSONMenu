@@ -9,3 +9,6 @@ template <typename T> int sign(T val) {
 
 rapidjson::Document dump_json(const char *filepath);
 unsigned int JSON_GetNum(rapidjson::Value &base, const char *prop, unsigned int def);
+std::vector<std::string> SplitString(const std::string &text, char sep);
+void PlayMusicFromFile(const char *filepath);
+void StopMusic();

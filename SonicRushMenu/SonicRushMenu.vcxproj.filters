@@ -21,25 +21,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuClasses\scrollhorizontal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuClasses\scrollvertical.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuClasses\simplevertical.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\MenuElements.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\SonicRFuncts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\API.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MiscFuncts.h">
+    <ClInclude Include="SonicRushMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,22 +29,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="JSONMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MiscFuncts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SonicRFuncts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuElements.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

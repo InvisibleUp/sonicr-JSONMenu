@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "../MenuElements.h"
+#include "MenuElements.h"
 
 // A menu selection layer that scrolls horizontally
 class MenuSelectorScrollHorizontal : public MenuSelector {
@@ -86,6 +86,9 @@ public:
 		} while (states[selection] == DISABLED);
 	}
 	bool doAction(rapidjson::Value &action) { return false; }
+	int querySelection() { return selection; }
+	int querySubSelection() { return -1; }
+	void loadTextures(std::vector<const char *> &GFXList){}
 };
 
 void * MenuSelectorScrollHorizontal_Constructor(
