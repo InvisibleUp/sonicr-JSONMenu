@@ -116,7 +116,11 @@ JSON Quick Reference
 		    "w": 56, // Width of icon in texture
 		    "h": 48, // Height of icon in texture
 		    "scale": 2 // Integer scaling factor
-                }
+                },
+		"condition": {
+		    "getInt": [address] // Address of Int32 to test against
+		    "value": [integer] // Disabled option unless [address] == value
+		}
                 "actions": [ // List of actions to perform. See below.
                     {"goto": "root"}
                 ]
