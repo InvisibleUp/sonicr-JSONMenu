@@ -7,18 +7,50 @@
             "properties": {
                 "xoff": 20,
                 "yoff": 60,
-                "yspacing": 0,
+                "yspacing": 16,
                 "scrollspeed": 8,
                 "basecolor": "0xFF666666",
                 "selcolor": "0xFFFF6666"
             }
         },
-        "timeout": 99999,
+        
         "background": {
-            "src": "mods/jsonmenu/menus/root/bg.raw"
+            "src": "mods/jsonmenu/art/bg.raw"
         },
         "music": 5,
         "options": [
+            {  
+                "id": "qstart",
+                "text": "Quick Start",
+                "icon": {
+                    "filepath": "bin/option/smode00.raw",
+                    "x": 56, "y": 208, "w": 56, "h": 48, "scale": 2
+                },
+                "choices": [
+                    {
+                        "id": "gp",
+                        "text": "Grand Prix",
+                        "actions": [
+                            {"setInt": "0x85DF28", "value": "5"},
+                            {"setInt": "0x769F24", "value": "0"},
+                            {"setInt": "0x7B747A", "value": "0"},
+                            {"setInt": "0x7af13c", "value": "1"},
+                            {"startgame": true}
+                        ]
+                    },
+                    {
+                        "id": "tt",
+                        "text": "Time Trials",
+                        "actions": [
+                            {"setInt": "0x85DF28", "value": "1"},
+                            {"setInt": "0x769F24", "value": "2"},
+                            {"setInt": "0x7B747A", "value": "0"},
+                            {"setInt": "0x7af13c", "value": "1"},
+                            {"startgame": true}
+                        ]
+                    }
+                ]
+            },
             {
                 "id": "gp",
                 "text": "Grand Prix",
@@ -46,19 +78,7 @@
                 }
             },
             {
-                "id": "mp",
-                "text": "Multiplayer",
-                "actions": [
-                    {"setInt": "0x769F24", "value": "1"},
-                    {"goto": "mpcontrollers"}
-                ],
-                "icon": {
-                    "filepath": "bin/option/smode00.raw",
-                    "x": 112, "y": 160, "w": 56, "h": 48, "scale": 2
-                }
-            },
-            {
-                "id": "opt",
+                "id": "options",
                 "text": "Options",
                 "actions": [
                     {"functcall": "0x4335D0"}
@@ -85,7 +105,7 @@
         "timeout": 99999,
         "music": 5,
         "background": {
-            "src": "mods/jsonmenu/menus/root/bg.raw"
+            "src": "mods/jsonmenu/art/bg.raw"
         },
         "options": [
             {
@@ -195,7 +215,7 @@
         "timeout": 99999,
         "music": 5,
         "background": {
-            "src": "mods/jsonmenu/menus/root/bg.raw"
+            "src": "mods/jsonmenu/art/bg.raw"
         },
         "options": [
             {
@@ -260,7 +280,7 @@
         "timeout": 99999,
         "music": 5,
         "background": {
-            "src": "mods/jsonmenu/menus/root/bg.raw"
+            "src": "mods/jsonmenu/art/bg.raw"
         },
         "options": [
             {
@@ -312,7 +332,7 @@
         "timeout": 99999,
         "music": 5,
         "background": {
-            "src": "mods/jsonmenu/menus/root/bg.raw"
+            "src": "mods/jsonmenu/art/bg.raw"
         },
         "options": [
             {
@@ -375,7 +395,7 @@
         "timeout": 99999,
         "music": 1,
         "background": {
-            "src": "mods/jsonmenu/title-bg.raw"
+            "src": "mods/jsonmenu/art/title-bg.raw"
         },
         "options": [
             {

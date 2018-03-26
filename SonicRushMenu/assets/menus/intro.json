@@ -1,0 +1,17 @@
+{
+	"id": "intro",
+	"layout": {
+		"class": "SonicRushTitle"
+	},
+	"music": "mods/SonicRushMenu/music/ANewDay_Title.adx",
+	"options": [
+		{
+			"id": "start",
+			"text": "Press Start Button",
+			"actions": [
+				{"stopmusic": true},
+				{"goto": "root"}
+			]
+		}
+	]
+}

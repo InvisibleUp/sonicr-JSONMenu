@@ -28,15 +28,15 @@ std::vector<const char *> Menu_LoadGFX(rapidjson::Value &menu) {
 			GFXList.push_back(menu["background"]["src"].GetString());
 		}
 	} else {
-		D3D_LoadWallpaper("mods/JSONMenu/nullbg.raw");
+		D3D_LoadWallpaper("mods/JSONMenu/art/nullbg.raw");
 		for (int i = 0; i < 6; i++) {
-			GFXList.push_back("mods/JSONMenu/nullbg.raw");
+			GFXList.push_back("mods/JSONMenu/art/nullbg.raw");
 		}
 	}
 
 	// Required for text
-	D3D_LoadTexture(7, "mods\\jsonmenu\\font.raw");
-	GFXList.push_back("mods\\jsonmenu\\font.raw");
+	D3D_LoadTexture(7, "mods\\jsonmenu\\art\\font.raw");
+	GFXList.push_back("mods\\jsonmenu\\art\\font.raw");
 
 	// Load textures required for preview and icons
 	if (menu.HasMember("options")) {

@@ -3,7 +3,7 @@
 #include "MenuElements.h"
 
 // A menu selection layer that lists elements vertically
-class SonicRushTitle : public MenuSelector {
+class MenuSelectorSimpleVertical : public MenuSelector {
 private:
 	int selectionIndexStart;
 	int selectionIndexEnd;
@@ -14,7 +14,7 @@ private:
 	std::vector<unsigned int> choiceSizes;
 	std::vector<unsigned int> choiceSelections;
 public:
-	SonicRushTitle(rapidjson::Value &a, std::vector<const char *> GFXList) {
+	MenuSelectorSimpleVertical(rapidjson::Value &a, std::vector<const char *> GFXList) {
 		// Fetch layout properties
 		std::vector<unsigned int> colors;
 
@@ -217,5 +217,5 @@ public:
 void * MenuSelectorSimpleVertical_Constructor(
 	rapidjson::Value &a, std::vector<const char *> GFXList
 ) {
-	return new SonicRushTitle(a, GFXList);
+	return new MenuSelectorSimpleVertical(a, GFXList);
 }
